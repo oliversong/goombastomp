@@ -23,13 +23,15 @@ describe("bold button", function(){
     var $newFirstTextElement = inner$("div").first();
     
     // is there a <b> element now?
-    var isBold = $newFirstTextElement.find("b").length === 1;
+    var isBold;
+    helper.waitFor(function() { return isBold = ($newFirstTextElement.find("b").length === 1) })
+    .done(function() {
+      //expect it to be bold
+      expect(isBold).to.be(true);
 
-    //expect it to be bold
-    expect(isBold).to.be(true);
-
-    //make sure the text hasn't changed
-    expect($newFirstTextElement.text()).to.eql($firstTextElement.text());
+      //make sure the text hasn't changed
+      expect($newFirstTextElement.text()).to.eql($firstTextElement.text());
+    });
 
     done();
   });
