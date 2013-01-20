@@ -1,0 +1,8 @@
+{"key":"globalAuthor:a.Ccvn0ZOPdRyog9VH","val":{"colorId":16,"name":null,"timestamp":1358717501181}}
+{"key":"token2author:t.Qz3iMDIGdEqUlrT61LJP","val":"a.Ccvn0ZOPdRyog9VH"}
+{"key":"globalAuthor:a.Ccvn0ZOPdRyog9VH","val":{"colorId":16,"name":null,"timestamp":1358717501183}}
+{"key":"pad2readonly:I2mM7HPAsS","val":"r.OQxQ37Ca39z20rky"}
+{"key":"readonly2pad:r.OQxQ37Ca39z20rky","val":"I2mM7HPAsS"}
+{"key":"pad:I2mM7HPAsS:revs:0","val":{"changeset":"Z:1>6b|5+6b$Welcome to Etherpad Lite!\n\nThis pad text is synchronized as you type, so that everyone viewing this page sees the same text. This allows you to collaborate seamlessly on documents!\n\nEtherpad Lite on Github: http://j.mp/ep-lite\n","meta":{"author":"","timestamp":1358717501184,"atext":{"text":"Welcome to Etherpad Lite!\n\nThis pad text is synchronized as you type, so that everyone viewing this page sees the same text. This allows you to collaborate seamlessly on documents!\n\nEtherpad Lite on Github: http://j.mp/ep-lite\n\n","attribs":"|6+6c"}}}}
+{"key":"pad:I2mM7HPAsS","val":{"atext":{"text":"Welcome to Etherpad Lite!\n\nThis pad text is synchronized as you type, so that everyone viewing this page sees the same text. This allows you to collaborate seamlessly on documents!\n\nEtherpad Lite on Github: http://j.mp/ep-lite\n\n","attribs":"|6+6c"},"pool":{"numToAttrib":{},"nextNum":0},"head":0,"chatHead":-1,"publicStatus":false,"passwordHash":null,"savedRevisions":[]}}
+{"key":"globalAuthor:a.Ccvn0ZOPdRyog9VH","val":{"colorId":16,"name":null,"timestamp":1358717501183}}

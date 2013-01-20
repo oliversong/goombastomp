@@ -132,17 +132,21 @@ exports.abiwordAvailable = function()
   }
 }
 
+exports.pollingDuration = 10;
+exports.secretindex = null;
 
 
 exports.reloadSettings = function reloadSettings() {
   // Discover where the settings file lives
-  var settingsFilename = argv.settings || "settings.json";
-  settingsFilename = path.resolve(path.join(root, settingsFilename));
+  //XXX var settingsFilename = argv.settings || "settings.json";
+  //XXX settingsFilename = path.resolve(path.join(root, settingsFilename));
 
   var settingsStr;
   try{
     //read the settings sync
-    settingsStr = fs.readFileSync(settingsFilename).toString();
+    //settingsStr = fs.readFileSync(settingsFilename).toString();
+    var settingsPath = argv.settings || path.normalize(__dirname + "/../../");
+    settingsStr = fs.readFileSync(settingsPath + "settings.json").toString();
   } catch(e){
     console.warn('No settings file found. Continuing using defaults!');
   }
@@ -179,7 +183,9 @@ exports.reloadSettings = function reloadSettings() {
       console.warn("Unknown Setting: '" + i + "'. This setting doesn't exist or it was removed");
     }
   }
-  
+ 
+
+
   log4js.configure(exports.logconfig);//Configure the logging appenders
   log4js.setGlobalLogLevel(exports.loglevel);//set loglevel
   log4js.replaceConsole();
@@ -188,6 +194,39 @@ exports.reloadSettings = function reloadSettings() {
     console.warn("DirtyDB is used. This is fine for testing but not recommended for production.")
   }
 }
+
+// If deployed in CloudFoundry
+if(process.env.VCAP_APP_PORT) {
+  exports.port = process.env.VCAP_APP_PORT
+}
+
+
+// use mysql if provided.
+var vcap_services = process.env.VCAP_SERVICES;
+
+if(vcap_services) {
+  console.log("env VCAP_SERVICES:" + vcap_services)
+  var svcs = JSON.parse(vcap_services)
+  for(var key in svcs ) {
+    console.log("key:" + key)
+    var svc = svcs[key]
+    console.log("service:" + svc)
+    if( key.match(/^mysql/) ) {
+      console.log("FOUND mysql")
+      exports.dbType= "mysql";
+      var cred = svc[0].credentials
+      exports.dbSettings = {
+        "user" : cred.user ,
+        "host" : cred.host ,
+        "port" : cred.port ,
+        "password" : cred.password ,
+        "database" : cred.name 
+      };
+    }
+    console.log("database setup: host = " + exports.dbSettings.host)
+  }
+}
+
 
 // initially load settings
 exports.reloadSettings();
