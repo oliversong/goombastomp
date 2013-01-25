@@ -24,12 +24,7 @@ iframe {
 }
 
 #users {
-  background: #f7f7f7;
-  background: -webkit-linear-gradient( #F7F7F7,#EEE);
-  background: -moz-linear-gradient( #F7F7F7,#EEE);
-  background: -ms-linear-gradient( #F7F7F7,#EEE);
-  background: -o-linear-gradient( #F7F7F7,#EEE);
-  background: linear-gradient( #F7F7F7,#EEE);
+  background-color:#f6f5f2;
   width: 160px;
   color: #fff;
   padding: 5px;
@@ -45,12 +40,6 @@ a img {
 }
 /* menu */
 .toolbar {
-  background: #f7f7f7;
-  background: -webkit-linear-gradient(#f7f7f7, #f1f1f1 80%);
-  background: -moz-linear-gradient(#f7f7f7, #f1f1f1 80%);
-  background: -o-linear-gradient(#f7f7f7, #f1f1f1 80%);
-  background: -ms-linear-gradient(#f7f7f7, #f1f1f1 80%);
-  background: linear-gradient(#f7f7f7, #f1f1f1 80%);
   border-bottom: 1px solid #ccc;
   overflow: hidden;
   padding-top: 4px;
@@ -86,30 +75,22 @@ a img {
 }
 .toolbar ul li a:hover {
   background: #fff;
-  background: -webkit-linear-gradient(#f4f4f4, #e4e4e4);
-  background: -moz-linear-gradient(#f4f4f4, #e4e4e4);
-  background: -o-linear-gradient(#f4f4f4, #e4e4e4);
-  background: -ms-linear-gradient(#f4f4f4, #e4e4e4);
-  background: linear-gradient(#f4f4f4, #e4e4e4);
+  background: -webkit-linear-gradient(top,#f7f5f2,#ECEAE7);
+  background: linear-gradient(top,#f7f5f2,#ECEAE7);
 }
 .toolbar ul li a:active {
+  background: -webkit-linear-gradient(top,#ECEAE7,#f7f5f2);
+  background: linear-gradient(top,#ECEAE7,#f7f5f2);
   background: #eee;
-  background: -webkit-linear-gradient(#ddd, #fff);
-  background: -moz-linear-gradient(#ddd, #fff);
-  background: -o-linear-gradient(#ddd, #fff);
-  background: -ms-linear-gradient(#ddd, #fff);
-  background: linear-gradient(#ddd, #fff);
   -webkit-box-shadow: 0 0 8px rgba(0,0,0,.1) inset;
   -moz-box-shadow: 0 0 8px rgba(0,0,0,.1) inset;
   box-shadow: 0 0 8px rgba(0,0,0,.1) inset;
 }
 .toolbar ul li a {
   background: #fff;
-  background: -webkit-linear-gradient(#fff, #f0f0f0);
-  background: -moz-linear-gradient(#fff, #f0f0f0);
-  background: -o-linear-gradient(#fff, #f0f0f0);
-  background: -ms-linear-gradient(#fff, #f0f0f0);
-  background: linear-gradient(#fff, #f0f0f0);
+  background: -webkit-linear-gradient(top,#f7f5f2,#ECEAE7);
+  background: linear-gradient(top,#f7f5f2,#ECEAE7);
+  border: 1px solid #eee;
   border: 1px solid #ccc;
   border-radius: 3px;
   color: #ccc;
@@ -167,6 +148,9 @@ a img {
   top: 2px;
 }
 #editorcontainer {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   position: absolute;
   width: 100%;
   top: 37px; /* + 1px border */
@@ -273,11 +257,8 @@ a img {
 #mycolorpickersave,
 #mycolorpickercancel {
   background: #fff;
-  background: -webkit-linear-gradient(#fff, #ccc);
-  background: -moz-linear-gradient(#fff, #ccc);
-  background: -o-linear-gradient(#fff, #ccc);
-  background: -ms-linear-gradient(#fff, #ccc);
-  background: linear-gradient(#fff, #ccc);
+  background: -webkit-linear-gradient(top,#f7f5f2,#ECEAE7);
+  background: linear-gradient(top,#f7f5f2,#ECEAE7);
   border: 1px solid #ccc;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -460,10 +441,8 @@ table#otheruserstable {
   width: 180px;
   height: 200px;
   z-index: 400;
-  background-color: #f7f7f7;
-  border-left: 1px solid #999;
-  border-right: 1px solid #999;
-  border-top: 1px solid #999;
+  border-bottom: 1px solid #CCC !important;
+  border-right: 1px solid #CCC !important;
   padding: 3px;
   padding-bottom: 10px;
   border-top-left-radius: 5px;
@@ -471,8 +450,6 @@ table#otheruserstable {
   display: none;
 }
 #chattext {
-  background-color: white;
-  border: 1px solid white;
   -ms-overflow-y: scroll;
   overflow-y: scroll;
   font-size: 12px;
@@ -523,6 +500,8 @@ table#otheruserstable {
   border: 1px solid #BBBBBB;
   width: 100%;
   float: right;
+  height: 20px;
+  font-size: 14px;
 }
 #chaticon {
   z-index: 400;
@@ -808,7 +787,6 @@ input[type=checkbox] {
   z-index: 500;
 }
 .stickyChat {
-  background-color: #f1f1f1 !important;
   right: 0px !important;
   top: 37px;
   -webkit-border-radius: 0px !important;

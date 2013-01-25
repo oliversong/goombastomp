@@ -81,7 +81,7 @@ body {
 }				 
 
 #outerdocbody {
-  background-color: #fff;
+  background-color: transparent !important;
 }
 body.grayedout { background-color: #eee !important }
 
