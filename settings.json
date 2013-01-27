@@ -73,6 +73,8 @@
   /* Require authorization by a module, or a user with is_admin set, see below. */
   "requireAuthorization": false,
 
+  "stickychat": true,
+
   /* Users for basic authentication. is_admin = true gives access to /admin.
      If you do not uncomment this, /admin will not be available! */
   /*
