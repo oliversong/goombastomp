@@ -26,16 +26,7 @@ var padManager = require("../db/PadManager");
 var randomString = require('ep_etherpad-lite/static/js/pad_utils').randomString;
 
 //ensure we have an apikey
-var apikey = null;
-try
-{
-  apikey = fs.readFileSync("./APIKEY.txt","utf8");
-}
-catch(e) 
-{
-  apikey = randomString(32);
-  fs.writeFileSync("./APIKEY.txt",apikey,"utf8");
-}
+var apikey = process.env.ETHERPAD_KEY;
 
 //a list of all functions
 var version =

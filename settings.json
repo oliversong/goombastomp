@@ -32,10 +32,10 @@
   //The Type of the database. You can choose between dirty, postgres, sqlite and mysql
   "dbType" : "mysql",
   "dbSettings" : {
-                  "user"    : "root",
-                  "host"    : "localhost",
-                  "password": "uchiha",
-                  "database": "etherpad-lite"
+    "user"    : url.parse(process.env.CLEARDB_DATABASE_URL).auth.split(':')[0], 
+    "password": url.parse(process.env.CLEARDB_DATABASE_URL).auth.split(':')[1], 
+    "host"    : url.parse(process.env.CLEARDB_DATABASE_URL).hostname, 
+    "database": url.parse(process.env.CLEARDB_DATABASE_URL).pathname.replace(/^\//, '')
                 },
   
   //Logging configuration. See log4js documentation for further information

@@ -19,10 +19,8 @@
  * limitations under the License.
  */
 
-var fs = require("fs");
 var os = require("os");
-var path = require('path');
-var argv = require('./Cli').argv;
+var url = require('url')
 var npm = require("npm/lib/npm.js");
 var vm = require('vm');
 var log4js = require("log4js");
@@ -50,7 +48,7 @@ exports.ip = "0.0.0.0";
 /**
  * The Port ep-lite should listen to
  */
-exports.port = process.env.PORT || 9001;
+exports.port = process.env.PORT; 
 
 /**
  * The SSL signed server key and the Certificate Authority's own certificate
@@ -66,16 +64,21 @@ exports.socketTransportProtocols = ['xhr-polling', 'jsonp-polling', 'htmlfile'];
 /*
  * The Type of the database
  */
-exports.dbType = "dirty";
+exports.dbType = "mysql";
 /**
  * This setting is passed with dbType to ueberDB to set up the database
  */
-exports.dbSettings = { "filename" : path.join(exports.root, "dirty.db") };
+exports.dbSettings = {
+                      "user"    : url.parse(process.env.CLEARDB_DATABASE_URL).auth.split(':')[0], 
+                      "password": url.parse(process.env.CLEARDB_DATABASE_URL).auth.split(':')[1], 
+                      "host"    : url.parse(process.env.CLEARDB_DATABASE_URL).hostname, 
+                      "database": url.parse(process.env.CLEARDB_DATABASE_URL).pathname.replace(/^\//, '')
+                     };
 
 /**
  * The default Text of a new pad
  */
-exports.defaultPadText = "Welcome to Etherpad Lite!\n\nThis pad text is synchronized as you type, so that everyone viewing this page sees the same text. This allows you to collaborate seamlessly on documents!\n\nEtherpad Lite on Github: http:\/\/j.mp/ep-lite\n";
+exports.defaultPadText = "Welcome to your collaborative note pad : )";
 
 /**
  * A flag that requires any user to have a valid session (via the api) before accessing a pad
@@ -95,7 +98,7 @@ exports.maxAge = 1000*60*60*6; // 6 hours
 /**
  * A flag that shows if minification is enabled or not
  */
-exports.minify = true;
+exports.minify = false;
 
 /**
  * The path of the abiword executable
@@ -106,6 +109,8 @@ exports.abiword = null;
  * The log level of log4js
  */
 exports.loglevel = "INFO";
+
+exports.stickychat = true;
 
 /*
 * log4js appender configuration
@@ -136,97 +141,3 @@ exports.pollingDuration = 10;
 exports.secretindex = null;
 
 
-exports.reloadSettings = function reloadSettings() {
-  // Discover where the settings file lives
-  //XXX var settingsFilename = argv.settings || "settings.json";
-  //XXX settingsFilename = path.resolve(path.join(root, settingsFilename));
-
-  var settingsStr;
-  try{
-    //read the settings sync
-    //settingsStr = fs.readFileSync(settingsFilename).toString();
-    var settingsPath = argv.settings || path.normalize(__dirname + "/../../");
-    settingsStr = fs.readFileSync(settingsPath + "settings.json").toString();
-  } catch(e){
-    console.warn('No settings file found. Continuing using defaults!');
-  }
-
-  // try to parse the settings
-  var settings;
-  try {
-    if(settingsStr) {
-      settings = vm.runInContext('exports = '+settingsStr, vm.createContext(), "settings.json");
-    }
-  }catch(e){
-    console.error('There was an error processing your settings.json file: '+e.message);
-    process.exit(1);
-  }
-
-  //loop trough the settings
-  for(var i in settings)
-  {
-    //test if the setting start with a low character
-    if(i.charAt(0).search("[a-z]") !== 0)
-    {
-      console.warn("Settings should start with a low character: '" + i + "'");
-    }
-
-    //we know this setting, so we overwrite it
-    //or it's a settings hash, specific to a plugin
-    if(exports[i] !== undefined || i.indexOf('ep_')==0)
-    {
-      exports[i] = settings[i];
-    }
-    //this setting is unkown, output a warning and throw it away
-    else
-    {
-      console.warn("Unknown Setting: '" + i + "'. This setting doesn't exist or it was removed");
-    }
-  }
- 
-
-
-  log4js.configure(exports.logconfig);//Configure the logging appenders
-  log4js.setGlobalLogLevel(exports.loglevel);//set loglevel
-  log4js.replaceConsole();
-
-  if(exports.dbType === "dirty"){
-    console.warn("DirtyDB is used. This is fine for testing but not recommended for production.")
-  }
-}
-
-// If deployed in CloudFoundry
-if(process.env.VCAP_APP_PORT) {
-  exports.port = process.env.VCAP_APP_PORT
-}
-
-
-// use mysql if provided.
-var vcap_services = process.env.VCAP_SERVICES;
-
-if(vcap_services) {
-  console.log("env VCAP_SERVICES:" + vcap_services)
-  var svcs = JSON.parse(vcap_services)
-  for(var key in svcs ) {
-    console.log("key:" + key)
-    var svc = svcs[key]
-    console.log("service:" + svc)
-    if( key.match(/^mysql/) ) {
-      console.log("FOUND mysql")
-      exports.dbType= "mysql";
-      var cred = svc[0].credentials
-      exports.dbSettings = {
-        "user" : cred.user ,
-        "host" : cred.host ,
-        "port" : cred.port ,
-        "password" : cred.password ,
-        "database" : cred.name 
-      };
-    }
-    console.log("database setup: host = " + exports.dbSettings.host)
-  }
-}
-
-
-// initially load settings
-exports.reloadSettings();
